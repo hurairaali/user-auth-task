@@ -20,7 +20,7 @@ export const AuthLayout = ({
 
   return (
     <div className="flex items-center justify-center min-h-screen ">
-      <div className="flex h-full w-full max-w-7xl max-h-[832px] bg-white">
+      <div className="flex h-full w-full max-w-7xl max-h-[832px] bg-white justify-center">
         <div className="w-full max-w-[549px] p-16 pt-8 flex flex-col justify-start gap-4">
           <div className="mb-6">
             <img
