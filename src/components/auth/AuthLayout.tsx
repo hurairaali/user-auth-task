@@ -54,17 +54,17 @@ export const AuthLayout = ({
               opacity: !isSignUpPage ? 0.8 : 0,
             }}
           />
-          \{" "}
+          \
           {!isSignUpPage && (
             <div className="relative z-10 text-white pt-8 pb-16 text-left max-w-[635px]">
               <p className="mb-6  font-[440] text-[48px] leading-[52px] tracking-[-0.015em] text-[#7AFCAA]">
                 Blank is the ultimate time saver for small business owners like
                 me.
               </p>
-              <p className=" font-light text-[36px] leading-[36px] tracking-[-0.01em]">
+              <p className=" font-light text-[36px] leading-[36px] tracking-[-0.01em] font-sans">
                 Brittany Stone
               </p>
-              <p className="font-sans font-extralight text-[22px] leading-[28px] tracking-[0em]">
+              <p className="font-sans font-extralight text-[22px] leading-[28px] tracking-[0em] font-sans">
                 SnapVision
               </p>
             </div>

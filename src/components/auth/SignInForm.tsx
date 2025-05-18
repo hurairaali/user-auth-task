@@ -8,6 +8,7 @@ import { useAuth } from "../../provider/AuthProvider";
 import { EyeIcon, EyeSlashIcon } from "../ui/icons";
 import type { SignInValues } from "../../lib/types";
 import GoogleLogo from "../../assets/_Google Logo Icon.svg";
+import Checkbox from "../ui/checkbox";
 
 export const SignInForm: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -100,32 +101,12 @@ export const SignInForm: React.FC = () => {
           </div>
 
           <div className="flex items-center justify-between mb-6">
-            <label className="flex items-center">
-              <Field
-                type="checkbox"
-                name="rememberMe"
-                className="sr-only peer"
-              />
-              <div className="w-6 h-6 rounded-sm border border-gray-400 bg-white flex items-center justify-center transition-colors peer-checked:bg-green-400 peer-checked:border-transparent">
-                <svg
-                  className="w-4 h-4 text-white hidden peer-checked:block"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              </div>
-              <span className="ml-2 text-sm text-gray-600">
-                Keep me signed in
-              </span>
-            </label>
-            <Link to="/" className="text-sm text-black underline">
+            <Checkbox />
+
+            <Link
+              to="/"
+              className="text-[16px] font-medium text-black underline font-sans "
+            >
               Forgot password?
             </Link>
           </div>
@@ -150,18 +131,23 @@ export const SignInForm: React.FC = () => {
               /* Handle Google sign in */
             }}
           >
-            <img src={GoogleLogo} alt="Google" className="w-5 h-5 mr-2" />
+            <img
+              src={GoogleLogo}
+              alt="Google"
+              className="w-5 h-5 mr-2 font-sans"
+            />
             Continue with Google
           </Button>
 
           {/* for the now will not navigate to sign-up page  */}
-
-          <p className="text-sm text-gray-600 mt-8 text-center">
-            Haven't joined yet?
-            <Link to="/" className="text-black underline">
+          <div className="flex flex-row items-center justify-center mt-8 gap-1">
+            <p className="text-sm text-gray-600 text-center font-sans">
+              Haven't joined yet?
+            </p>
+            <Link to="/" className="text-black underline text-sm">
               Sign up
             </Link>
-          </p>
+          </div>
         </Form>
       )}
     </Formik>
