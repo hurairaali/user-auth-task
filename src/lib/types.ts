@@ -4,7 +4,7 @@ export interface AuthFormProps {
   subtitle: string;
 }
 
-export interface SignInValues {
+export interface AuthCredentials {
   identifier: string; // This will hold either username or email
   password: string;
   rememberMe?: boolean;

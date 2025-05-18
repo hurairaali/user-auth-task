@@ -1,85 +1,78 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode,
-} from "react";
-import type { SignInValues, AuthResponse } from "../lib/types";
-import axios from "axios";
+import { createContext, useContext, useState, type ReactNode } from "react";
+import type { AuthCredentials, AuthResponse } from "../lib/types";
+import axios, { AxiosError } from "axios";
+
+const authURL =
+  (import.meta.env.VITE_API_URL || "https://dummyjson.com") + "/auth/login";
+
+const authService = {
+  async login(username: string, password: string): Promise<AuthResponse> {
+    const response = await axios.post<AuthResponse>(authURL, {
+      username: username,
+      password: password,
+    });
+    return response.data;
+  },
+  // singup
+  // refresh token
+};
 
 interface AuthContextType {
   user: AuthResponse | null;
   isAuthenticated: boolean;
-  signIn: (values: SignInValues) => Promise<void>;
+  signIn: (values: AuthCredentials) => Promise<void>;
   signOut: () => void;
+  error: string | null;
+}
+
+interface AuthState {
+  user: AuthResponse | null;
   error: string | null;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-type Props = {
+type AuthProviderProps = {
   children: ReactNode;
 };
 
-const AuthProvider = ({ children }: Props) => {
-  const [user, setUser] = useState<AuthResponse | null>(() => {
+const AuthProvider = ({ children }: AuthProviderProps) => {
+  const [state, setState] = useState<AuthState>(() => {
     const savedUser = localStorage.getItem("user");
-    return savedUser ? JSON.parse(savedUser) : null;
+    return {
+      user: savedUser ? JSON.parse(savedUser) : null,
+      error: null,
+    };
   });
-  const [error, setError] = useState<string | null>(null);
 
-  const signIn = async (values: SignInValues) => {
+  const signIn = async (values: AuthCredentials) => {
     try {
-      // Convert the identifier to either username or email based on format
-      const isEmail = values.identifier.includes("@");
-      const loginPayload = {
-        [isEmail ? "email" : "username"]: values.identifier,
-        password: values.password,
-      };
-
-      const response = await axios.post<AuthResponse>(
-        "https://dummyjson.com/auth/login",
-        loginPayload
+      const userData = await authService.login(
+        values.identifier,
+        values.password
       );
-
-      setUser(response.data);
-      setError(null);
+      setState({ user: userData, error: null });
     } catch (err) {
-      const message = axios.isAxiosError(err)
-        ? err.response?.data?.message || err.message
-        : "An error occurred during sign in";
-      setError(message);
-      throw new Error(message);
+      const errorMessage =
+        err instanceof AxiosError
+          ? err.response?.data?.message || err.message
+          : "An error occurred during sign in";
+      setState((prev) => ({ ...prev, error: errorMessage }));
+      throw new Error(errorMessage);
     }
   };
 
   const signOut = () => {
-    setUser(null);
-    setError(null);
+    setState({ user: null, error: null });
   };
 
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-      axios.defaults.headers.common["Authorization"] = `Bearer ${user.token}`;
-    } else {
-      localStorage.removeItem("user");
-      delete axios.defaults.headers.common["Authorization"];
-    }
-  }, [user]);
-
-  const contextValue = useMemo(
-    () => ({
-      user,
-      isAuthenticated: !!user,
-      signIn,
-      signOut,
-      error,
-    }),
-    [user, error]
-  );
+  const contextValue = {
+    user: state.user,
+    isAuthenticated: !!state.user,
+    signIn,
+    signOut,
+    error: state.error,
+  };
 
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>

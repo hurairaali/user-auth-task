@@ -6,7 +6,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../provider/AuthProvider";
 import { EyeIcon, EyeSlashIcon } from "../ui/icons";
-import type { SignInValues } from "../../lib/types";
+import type { AuthCredentials } from "../../lib/types";
 import GoogleLogo from "../../assets/_Google Logo Icon.svg";
 import Checkbox from "../ui/checkbox";
 
@@ -16,13 +16,13 @@ export const SignInForm: React.FC = () => {
   const { signIn, error: authError } = useAuth();
   const navigate = useNavigate();
 
-  const initialValues: SignInValues = {
+  const initialValues: AuthCredentials = {
     identifier: "",
     password: "",
     rememberMe: false,
   };
 
-  const handleSubmit = async (values: SignInValues) => {
+  const handleSubmit = async (values: AuthCredentials) => {
     setIsLoading(true);
     try {
       await signIn(values);
@@ -60,9 +60,8 @@ export const SignInForm: React.FC = () => {
               name="identifier"
               type="text"
               placeholder="Enter your username or email"
-              className={`w-full ${
-                touched.identifier && errors.identifier ? "border-red-500" : ""
-              }`}
+              className={`w-full ${touched.identifier && errors.identifier ? "border-red-500" : ""
+                }`}
             />
             {touched.identifier && errors.identifier && (
               <p className="mt-1 text-sm text-red-500">{errors.identifier}</p>
@@ -83,9 +82,8 @@ export const SignInForm: React.FC = () => {
                 name="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
-                className={`w-full ${
-                  touched.password && errors.password ? "border-red-500" : ""
-                }`}
+                className={`w-full ${touched.password && errors.password ? "border-red-500" : ""
+                  }`}
               />
               <button
                 type="button"

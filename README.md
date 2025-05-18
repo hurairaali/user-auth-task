@@ -24,9 +24,12 @@ A responsive user authentication flow with login and logout functionality, built
 
 ## 🔧 Getting Started
 
-1. **Clone the repository**
+1. **Run the developmet env**
 
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+# Install deps
+yarn
+
+# Run
+yarn dev
 ```
