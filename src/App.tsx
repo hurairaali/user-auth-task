@@ -1,15 +1,15 @@
+import Routes from "./routes";
+import AuthProvider from "./provider/AuthProvider";
 import "./App.css";
 
-function App() {
+const App: React.FC = () => {
   return (
     <>
-      <div></div>
-
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
     </>
   );
-}
+};
 
 export default App;
