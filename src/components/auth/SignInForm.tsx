@@ -60,8 +60,9 @@ export const SignInForm: React.FC = () => {
               name="identifier"
               type="text"
               placeholder="Enter your username or email"
-              className={`w-full ${touched.identifier && errors.identifier ? "border-red-500" : ""
-                }`}
+              className={`w-full ${
+                touched.identifier && errors.identifier ? "border-red-500" : ""
+              }`}
             />
             {touched.identifier && errors.identifier && (
               <p className="mt-1 text-sm text-red-500">{errors.identifier}</p>
@@ -82,8 +83,9 @@ export const SignInForm: React.FC = () => {
                 name="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
-                className={`w-full ${touched.password && errors.password ? "border-red-500" : ""
-                  }`}
+                className={`w-full ${
+                  touched.password && errors.password ? "border-red-500" : ""
+                }`}
               />
               <button
                 type="button"

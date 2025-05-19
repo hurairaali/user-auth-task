@@ -13,8 +13,6 @@ const authService = {
     });
     return response.data;
   },
-  // singup
-  // refresh token
 };
 
 interface AuthContextType {
@@ -51,6 +49,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         values.identifier,
         values.password
       );
+      localStorage.setItem("user", JSON.stringify(userData));
       setState({ user: userData, error: null });
     } catch (err) {
       const errorMessage =
@@ -63,6 +62,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const signOut = () => {
+    localStorage.removeItem("user");
     setState({ user: null, error: null });
   };
 
